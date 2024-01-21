@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 7.5.4.2 (Windows)"/>
+	<meta name="created" content="2024-01-21T17:21:21.491000000"/>
+	<meta name="changed" content="2024-01-21T17:42:37.637000000"/>
+	<style type="text/css">
+		@page { margin: 2cm }
+		p { line-height: 115%; margin-bottom: 0.25cm; background: transparent }
+	</style>
+</head>
+<body lang="ru-RU" dir="ltr"><p style="line-height: 100%; margin-bottom: 0cm">
+&lt;!DOCTYPE html&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0cm">&lt;html lang=&quot;en&quot;&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0cm">&lt;head&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0cm">  &lt;meta
+charset=&quot;UTF-8&quot;&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0cm">  &lt;meta
+name=&quot;viewport&quot; content=&quot;width=device-width,
+initial-scale=1.0&quot;&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0cm">  &lt;title&gt;AR 3D
+Model&lt;/title&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0cm">  &lt;!-- Полифилл
+для поддержки WebXR в различных браузерах
+--&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0cm">  &lt;script
+type=&quot;module&quot;
+src=&quot;https://unpkg.com/webxr-polyfill&quot;&gt;&lt;/script&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0cm">  &lt;!-- Добавляем
+ссылку на библиотеку Three.js --&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0cm">  &lt;script
+type=&quot;module&quot;
+src=&quot;https://threejs.org/build/three.module.js&quot;&gt;&lt;/script&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0cm">&lt;/head&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0cm">&lt;body&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0cm">  &lt;script
+type=&quot;module&quot;&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0cm">    const scene =
+new THREE.Scene();</p>
+<p style="line-height: 100%; margin-bottom: 0cm">    const camera =
+new THREE.PerspectiveCamera(75, window.innerWidth /
+window.innerHeight, 0.1, 1000);</p>
+<p style="line-height: 100%; margin-bottom: 0cm">    const renderer =
+new THREE.WebGLRenderer();</p>
+<p style="line-height: 100%; margin-bottom: 0cm"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0cm">    const light =
+new THREE.PointLight(0xFFFFFF, 1, 1000);</p>
+<p style="line-height: 100%; margin-bottom: 0cm">   
+light.position.set(0, 0, 0);</p>
+<p style="line-height: 100%; margin-bottom: 0cm">   
+scene.add(light);</p>
+<p style="line-height: 100%; margin-bottom: 0cm"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0cm">    const loader =
+new THREE.GLTFLoader();</p>
+<p style="line-height: 100%; margin-bottom: 0cm">    let model;</p>
+<p style="line-height: 100%; margin-bottom: 0cm"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0cm">   
+loader.load('./Delta.glb', (gltf) =&gt; {</p>
+<p style="line-height: 100%; margin-bottom: 0cm">      model =
+gltf.scene;</p>
+<p style="line-height: 100%; margin-bottom: 0cm">     
+scene.add(model);</p>
+<p style="line-height: 100%; margin-bottom: 0cm">    });</p>
+<p style="line-height: 100%; margin-bottom: 0cm"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0cm">   
+camera.position.z = 5;</p>
+<p style="line-height: 100%; margin-bottom: 0cm"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0cm">   
+renderer.setSize(window.innerWidth, window.innerHeight);</p>
+<p style="line-height: 100%; margin-bottom: 0cm">   
+document.body.appendChild(renderer.domElement);</p>
+<p style="line-height: 100%; margin-bottom: 0cm"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0cm">    if ('xr' in
+navigator) {</p>
+<p style="line-height: 100%; margin-bottom: 0cm">     
+navigator.xr.isSessionSupported('immersive-ar').then((supported) =&gt;
+{</p>
+<p style="line-height: 100%; margin-bottom: 0cm">        if
+(supported) {</p>
+<p style="line-height: 100%; margin-bottom: 0cm">         
+navigator.xr.requestSession('immersive-ar').then((session) =&gt; {</p>
+<p style="line-height: 100%; margin-bottom: 0cm">           
+handleXRSession(session);</p>
+<p style="line-height: 100%; margin-bottom: 0cm">          });</p>
+<p style="line-height: 100%; margin-bottom: 0cm">        } else {</p>
+<p style="line-height: 100%; margin-bottom: 0cm">         
+console.error('AR не поддерживается.');</p>
+<p style="line-height: 100%; margin-bottom: 0cm">        }</p>
+<p style="line-height: 100%; margin-bottom: 0cm">      });</p>
+<p style="line-height: 100%; margin-bottom: 0cm">    } else {</p>
+<p style="line-height: 100%; margin-bottom: 0cm">     
+console.error('WebXR не поддерживается в вашем
+браузере.');</p>
+<p style="line-height: 100%; margin-bottom: 0cm">    }</p>
+<p style="line-height: 100%; margin-bottom: 0cm"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0cm">    function
+handleXRSession(session) {</p>
+<p style="line-height: 100%; margin-bottom: 0cm">     
+session.updateRenderState({ baseLayer: new XRWebGLLayer(session,
+renderer) });</p>
+<p style="line-height: 100%; margin-bottom: 0cm"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0cm">     
+session.requestAnimationFrame(onXRFrame);</p>
+<p style="line-height: 100%; margin-bottom: 0cm"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0cm">      function
+onXRFrame(time, frame) {</p>
+<p style="line-height: 100%; margin-bottom: 0cm">        const
+xrViewerPose = frame.getViewerPose();</p>
+<p style="line-height: 100%; margin-bottom: 0cm">        if
+(xrViewerPose) {</p>
+<p style="line-height: 100%; margin-bottom: 0cm">          const
+xrView = xrViewerPose.views[0];</p>
+<p style="line-height: 100%; margin-bottom: 0cm">          const pose
+= xrView.transform.matrix;</p>
+<p style="line-height: 100%; margin-bottom: 0cm"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0cm">          // Ваш
+код для обновления положения 3D-модели
+на основе данных pose</p>
+<p style="line-height: 100%; margin-bottom: 0cm"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0cm">         
+renderer.render(scene, camera);</p>
+<p style="line-height: 100%; margin-bottom: 0cm">        }</p>
+<p style="line-height: 100%; margin-bottom: 0cm"><br/>
+
+</p>
+<p style="line-height: 100%; margin-bottom: 0cm">       
+session.requestAnimationFrame(onXRFrame);</p>
+<p style="line-height: 100%; margin-bottom: 0cm">      }</p>
+<p style="line-height: 100%; margin-bottom: 0cm">    }</p>
+<p style="line-height: 100%; margin-bottom: 0cm">  &lt;/script&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0cm">&lt;/body&gt;</p>
+<p style="line-height: 100%; margin-bottom: 0cm">&lt;/html&gt;</p>
+</body>
+</html>

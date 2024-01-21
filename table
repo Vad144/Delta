@@ -4,14 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AR 3D Model</title>
-  <!-- Полифилл для поддержки WebXR в различных браузерах -->
-  <script type="module" src="https://unpkg.com/webxr-polyfill"></script>
-  <!-- Добавляем ссылку на библиотеку Three.js -->
+  <!-- Замените строку загрузки webxr-polyfill.js на следующую -->
+  <script type="module" src="https://unpkg.com/webxr-polyfill/build/webxr-polyfill.module.js"></script>
+  <!-- Замените строку импорта Three.js на следующую -->
   <script type="module" src="https://threejs.org/build/three.module.js"></script>
 </head>
 <body>
   <script type="module">
     import * as THREE from 'https://threejs.org/build/three.module.js';
+    import { GLTFLoader } from 'https://threejs.org/examples/jsm/loaders/GLTFLoader.js';
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -21,7 +22,8 @@
     light.position.set(0, 0, 0);
     scene.add(light);
 
-    const loader = new THREE.GLTFLoader();
+    // Замените на явный импорт GLTFLoader
+    const loader = new GLTFLoader();
     let model;
 
     loader.load('./Delta.glb', (gltf) => {
